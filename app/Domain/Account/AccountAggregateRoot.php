@@ -9,7 +9,10 @@ use App\Domain\Account\Events\MoneyAdded;
 use App\Domain\Account\Events\MoneySubtracted;
 use App\Domain\Account\Events\MoreMoneyNeeded;
 use App\Domain\Account\Exceptions\CouldNotSubtractMoney;
+use App\Repositories\AccountStoredEventRepository;
+use Override;
 use Spatie\EventSourcing\AggregateRoots\AggregateRoot;
+use Spatie\EventSourcing\StoredEvents\Repositories\StoredEventRepository;
 
 class AccountAggregateRoot extends AggregateRoot
 {
@@ -84,5 +87,10 @@ class AccountAggregateRoot extends AggregateRoot
     private function needsMoreMoney()
     {
         return $this->accountLimitHitInARow >= 3;
+    }
+    
+    #[Override]
+    protected function getStoredEventRepository(): StoredEventRepository {
+        return new AccountStoredEventRepository();
     }
 }
