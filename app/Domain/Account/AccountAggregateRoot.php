@@ -9,7 +9,8 @@ use App\Domain\Account\Events\MoneyAdded;
 use App\Domain\Account\Events\MoneySubtracted;
 use App\Domain\Account\Events\MoreMoneyNeeded;
 use App\Domain\Account\Exceptions\CouldNotSubtractMoney;
-use App\Repositories\AccountStoredEventRepository;
+use App\Models\AccountStoredEvent;
+use App\Repositories\TableStoredEventRepository;
 use Override;
 use Spatie\EventSourcing\AggregateRoots\AggregateRoot;
 use Spatie\EventSourcing\StoredEvents\Repositories\StoredEventRepository;
@@ -91,6 +92,6 @@ class AccountAggregateRoot extends AggregateRoot
     
     #[Override]
     protected function getStoredEventRepository(): StoredEventRepository {
-        return new AccountStoredEventRepository();
+        return new TableStoredEventRepository(AccountStoredEvent::class);
     }
 }
