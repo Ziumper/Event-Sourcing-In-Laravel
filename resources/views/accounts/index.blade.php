@@ -48,11 +48,15 @@
         </ul>
         <h1 class="text-3xl text-green">List of latest deposits:</h1>
         <ul>
+        
         @foreach($deposits as $deposit)
             <li class="mb-2 leading-none flex items-stretch">
                 <div class="flex-1 flex flex-col justify-center p-4 rounded-sm bg-grey-darkest border-grey-darker mr-2">
                     <strong class="text-3xl {{ $deposit["amount"] >= 0 ? 'text-green' : 'text-red' }}">
-                        € {{ $deposit["amount"] }} 
+                        <strong>Account balance:</strong>€ {{ $deposit["amount"] }} 
+                    </strong>
+                    <strong class="text-3xl {{ $deposit["type"] === 'Deposit' ? 'text-green' : 'text-red' }}">
+                            <span>Transaction info: <br> {{$deposit['type'] }}:  € {{ $deposit["transactionAmount"] }} </span>
                     </strong>
                     {{ $deposit["when"]->format("Y-m-d h:m:s") }}
                     <strong></strong>
